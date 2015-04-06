@@ -30,6 +30,7 @@ function StreamMatch (t, command, opts) {
 StreamMatch.prototype.end = function (onDone) {
   var self = this
   self.proc.on('exit', function onExit (code) {
+    code = code || 0
     if (self.timeoutId) clearTimeout(self.timeoutId)
     if (typeof self.opts.exitCode === 'number') self.t.equal(self.opts.exitCode, code, 'exit code matched')
     else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, 'non-zero exit code')
