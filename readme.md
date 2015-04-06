@@ -65,6 +65,10 @@ waits for `time` milliseconds and then kills the spawned process and fails the t
 
 sets up a tape assertion for `t.end()`. if you pass the optional `onDone` callback, no `t.end()` assertion will be created, and your `onDone` callback will be called when the test is done
 
+### spawnTest.kill()
+
+kills the spawned process
+
 ### spawnTest.stdin
 
 this property is the internally spawned process `stdin` stream instance

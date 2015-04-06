@@ -14,6 +14,7 @@ function StreamMatch (t, command, opts) {
   this.stdout = new StreamTest(t, this.proc.stdout, checkDone)
   this.stderr = new StreamTest(t, this.proc.stderr, checkDone)
   this.stdin = this.proc.stdin
+  this.kill = this.proc.kill
 
   // in case tape times out or something we should clean up
   t.on('end', function onTapeEnd () {
