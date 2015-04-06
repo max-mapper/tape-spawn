@@ -4,7 +4,7 @@
   "description": "spawn processes conveniently in tape tests and match against stdout/stderr streaming output",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard && node test/test.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/maxogden/tape-spawn/issues"
   },
-  "homepage": "https://github.com/maxogden/tape-spawn"
+  "homepage": "https://github.com/maxogden/tape-spawn",
+  "dependencies": {
+    "npm-execspawn": "^1.0.6"
+  },
+  "devDependencies": {
+    "cat": "^0.2.0",
+    "standard": "^3.3.2",
+    "tape": "^4.0.0"
+  }
 }
