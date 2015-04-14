@@ -76,6 +76,7 @@ StreamTest.prototype.empty = function empty () {
 
 StreamTest.prototype.match = function match (pattern, message, failMessage) {
   var self = this
+  var patternLabel = (typeof pattern === 'function') ? 'pattern function' : pattern
   this.pending++
   var matched = false
   var buff = ''
@@ -89,7 +90,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     matchOutput()
     if (!matched) {
       self.pending--
-      var outMessage = buff + ' did not match ' + pattern
+      var outMessage = buff + ' did not match ' + patternLabel
       if (failMessage) outMessage = failMessage + ' ("' + buff + '")'
       self.t.ok(false, outMessage)
       self.onDone()
@@ -101,7 +102,6 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     var match
     if (typeof pattern === 'function') {
       match = pattern(buff)
-      pattern = 'pattern function'
     } else if (typeof pattern === 'string') {
       match = pattern === buff
     } else {
@@ -110,7 +110,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     if (match) {
       matched = true
       self.pending--
-      self.t.ok(true, message || 'matched ' + pattern)
+      self.t.ok(true, message || 'matched ' + patternLabel)
       self.onDone()
     }
   }
