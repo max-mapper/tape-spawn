@@ -89,7 +89,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     matchOutput()
     if (!matched) {
       self.pending--
-      var outMessage = 'did not match ' + pattern
+      var outMessage = buff + ' did not match ' + pattern
       if (failMessage) outMessage = failMessage + ' ("' + buff + '")'
       self.t.ok(false, outMessage)
       self.onDone()
@@ -99,8 +99,14 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
   function matchOutput () {
     if (matched) return
     var match
-    if (typeof pattern === 'string') match = pattern === buff
-    else match = pattern.test(buff)
+    if (typeof pattern === 'function') {
+      match = pattern(buff)
+      pattern = 'pattern function'
+    } else if (typeof pattern === 'string') {
+      match = pattern === buff
+    } else {
+      match = pattern.test(buff)
+    }
     if (match) {
       matched = true
       self.pending--

@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "cat": "^0.2.0",
-    "standard": "^3.3.2",
+    "standard": "^3.6.0",
     "tape": "^4.0.0"
   }
 }

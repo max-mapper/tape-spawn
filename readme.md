@@ -76,6 +76,7 @@ this property is the internally spawned process `stdin` stream instance
 ### spawnTest.stdout.match(pattern, [message, failMessage])
 
 matches `stdout` output (assumes utf8 encoding). if `pattern` is a RegExp it will set up a tape assertion that uses use `pattern.test(output)`. if `pattern` is a string it will use `t.equals()` to match the entire output against `message`.
+if `pattern` is a function it should return true/false and take 1 argument, the full output of the spawn
 
 You can pass the optional `message` or `failMessage` to customize the tape assertion messages
 
