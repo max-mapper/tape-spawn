@@ -29,6 +29,10 @@ test('spawn ls', function (t) {
 })
 ```
 
+## debugging
+
+If you set `DEBUG=tape-spawn` in your ENV when running your tests then the STDERR of the spawned child process will be piped into the STDERR of your terminal.
+
 ## api
 
 ### `var spawn = require('tape-spawn')`
