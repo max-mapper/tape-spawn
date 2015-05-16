@@ -11,8 +11,8 @@ function StreamMatch (t, command, opts) {
   this.proc = spawn(command, opts)
   this.t = t
   this.opts = opts
-  this.stdout = new StreamTest(t, this.proc.stdout, checkDone)
-  this.stderr = new StreamTest(t, this.proc.stderr, checkDone)
+  this.stdout = new StreamTest(t, this.proc.stdout, checkDone, 'stdout')
+  this.stderr = new StreamTest(t, this.proc.stderr, checkDone, 'stderr')
   this.stdin = this.proc.stdin
   this.kill = this.proc.kill
 
@@ -67,16 +67,17 @@ StreamMatch.prototype.exitCode = function (code) {
   this.opts.exitCode = code
 }
 
-function StreamTest (t, stream, onDone) {
-  if (!(this instanceof StreamTest)) return new StreamTest(t, stream, onDone)
+function StreamTest (t, stream, onDone, label) {
+  if (!(this instanceof StreamTest)) return new StreamTest(t, stream, onDone, label)
   this.t = t
   this.stream = stream
   this.onDone = onDone
+  this.label = label ? label + ' ' : ''
   this.pending = 0
 }
 
 StreamTest.prototype.empty = function empty () {
-  this.match(/^$/, 'output was empty', 'output was not empty')
+  this.match(/^$/, this.label + 'was empty', this.label + 'was not empty')
 }
 
 StreamTest.prototype.match = function match (pattern, message, failMessage) {
