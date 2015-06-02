@@ -96,7 +96,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     matchOutput()
     if (!matched) {
       self.pending--
-      var outMessage = buff + ' did not match ' + patternLabel
+      var outMessage = '"' + buff + '" did not match ' + patternLabel
       if (failMessage) outMessage = failMessage + ' ("' + buff + '")'
       self.t.ok(false, outMessage)
       self.onDone()
