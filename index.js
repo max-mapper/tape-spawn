@@ -1,4 +1,5 @@
 var spawn = require('npm-execspawn')
+var stripAnsi = require('strip-ansi')
 
 module.exports = StreamMatch
 
@@ -98,7 +99,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
       self.pending--
       var outMessage = '"' + buff + '" did not match ' + patternLabel
       if (failMessage) outMessage = failMessage + ' ("' + buff + '")'
-      self.t.ok(false, outMessage)
+      self.t.ok(false, stripAnsi(outMessage))
       self.onDone()
     }
   })
@@ -116,7 +117,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     if (match) {
       matched = true
       self.pending--
-      self.t.ok(true, message || 'matched ' + patternLabel)
+      self.t.ok(true, stripAnsi(message || 'matched ' + patternLabel))
       self.onDone()
     }
   }

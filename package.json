@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/maxogden/tape-spawn",
   "dependencies": {
-    "npm-execspawn": "^1.0.6"
+    "npm-execspawn": "^1.0.6",
+    "strip-ansi": "^2.0.1"
   },
   "devDependencies": {
     "cat": "^0.2.0",
