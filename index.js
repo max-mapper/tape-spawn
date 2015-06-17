@@ -15,7 +15,7 @@ function StreamMatch (t, command, opts) {
   this.stdout = new StreamTest(t, this.proc.stdout, checkDone, 'stdout')
   this.stderr = new StreamTest(t, this.proc.stderr, checkDone, 'stderr')
   this.stdin = this.proc.stdin
-  this.kill = this.proc.kill
+  this.kill = this.proc.kill.bind(this.proc)
 
   var debug = process.env.DEBUG || ''
   if (debug.indexOf('tape-spawn') > -1) {
