@@ -39,7 +39,7 @@ StreamMatch.prototype.end = function (onDone) {
   self.proc.on('exit', function onExit (code) {
     code = code || 0
     if (self.timeoutId) clearTimeout(self.timeoutId)
-    if (typeof self.opts.exitCode === 'number') self.t.equal(self.opts.exitCode, code, 'exit code matched')
+    if (typeof self.opts.exitCode === 'number') self.t.equal(code, self.opts.exitCode, 'exit code matched')
     else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, 'non-zero exit code')
     if (self.opts.end !== false) self.t.end()
     if (onDone) onDone()
