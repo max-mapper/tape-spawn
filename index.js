@@ -39,8 +39,8 @@ StreamMatch.prototype.end = function (onDone) {
   self.proc.on('exit', function onExit (code) {
     code = code || 0
     if (self.timeoutId) clearTimeout(self.timeoutId)
-    if (typeof self.opts.exitCode === 'number') self.t.equal(code, self.opts.exitCode, 'exit code matched')
-    else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, 'non-zero exit code')
+    if (typeof self.opts.exitCode === 'number') self.t.equal(code, self.opts.exitCode, self.opts.exitCodeMessage)
+    else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, self.opts.exitCodeMessage)
     if (self.opts.end !== false) self.t.end()
     if (onDone) onDone()
   })
@@ -56,16 +56,19 @@ StreamMatch.prototype.timeout = function (time, message) {
   }, time)
 }
 
-StreamMatch.prototype.succeeds = function () {
+StreamMatch.prototype.succeeds = function (message) {
   this.opts.exitCode = 0
+  this.opts.exitCodeMessage = message || 'exit code matched'
 }
 
-StreamMatch.prototype.fails = function () {
+StreamMatch.prototype.fails = function (message) {
   this.opts.exitCode = 'nonzero'
+  this.opts.exitCodeMessage = message || 'non-zero exit code'
 }
 
-StreamMatch.prototype.exitCode = function (code) {
+StreamMatch.prototype.exitCode = function (code, message) {
   this.opts.exitCode = code
+  this.opts.exitCodeMessage = message || 'exit code matched'
 }
 
 function StreamTest (t, stream, onDone, label) {
