@@ -1,5 +1,6 @@
 var spawn = require('npm-execspawn')
 var stripAnsi = require('strip-ansi')
+var defined = require('defined')
 
 module.exports = StreamMatch
 
@@ -39,8 +40,8 @@ StreamMatch.prototype.end = function (onDone) {
   self.proc.on('exit', function onExit (code) {
     code = code || 0
     if (self.timeoutId) clearTimeout(self.timeoutId)
-    if (typeof self.opts.exitCode === 'number') self.t.equal(code, self.opts.exitCode, 'exit code matched')
-    else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, 'non-zero exit code')
+    if (typeof self.opts.exitCode === 'number') self.t.equal(code, self.opts.exitCode, self.opts.exitCodeMessage)
+    else if (self.opts.exitCode === 'nonzero') self.t.notEqual(code, 0, self.opts.exitCodeMessage)
     if (self.opts.end !== false) self.t.end()
     if (onDone) onDone()
   })
@@ -52,20 +53,23 @@ StreamMatch.prototype.timeout = function (time, message) {
   self.timeoutId = setTimeout(function timeout () {
     self.proc.kill()
     if (typeof message === 'function') message() // e.g. let the user handle the assertion themselves
-    else self.t.ok(false, message || 'timeout exceeded')
+    else self.t.ok(false, defined(message, 'timeout exceeded'))
   }, time)
 }
 
-StreamMatch.prototype.succeeds = function () {
+StreamMatch.prototype.succeeds = function (message) {
   this.opts.exitCode = 0
+  this.opts.exitCodeMessage = defined(message, 'exit code matched')
 }
 
-StreamMatch.prototype.fails = function () {
+StreamMatch.prototype.fails = function (message) {
   this.opts.exitCode = 'nonzero'
+  this.opts.exitCodeMessage = defined(message, 'non-zero exit code')
 }
 
-StreamMatch.prototype.exitCode = function (code) {
+StreamMatch.prototype.exitCode = function (code, message) {
   this.opts.exitCode = code
+  this.opts.exitCodeMessage = defined(message, 'exit code matched')
 }
 
 function StreamTest (t, stream, onDone, label) {
@@ -117,7 +121,7 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
     if (match) {
       matched = true
       self.pending--
-      self.t.ok(true, stripAnsi(message || 'matched ' + patternLabel))
+      self.t.ok(true, stripAnsi(defined(message, 'matched ' + patternLabel)))
       self.onDone()
     }
   }

@@ -49,17 +49,17 @@ returns `spawnTest`, which can be used to set up assertions. also spawns a proce
 
 in addition, the entire `options` object will get passed as the second argument to `spawn`, so you can do e.g. `{env: {FOO: 'bar'}}` to pass env vars to pass custom spawn options (see the child_process node docs for more info)
 
-### spawnTest.fails()
+### spawnTest.fails([message])
 
-takes no args. sets up a tape assertion that expects a non-zero exit code
+sets up a tape assertion that expects a non-zero exit code – with an optional `message`
 
-### spawnTest.succeeds()
+### spawnTest.succeeds([message])
 
-takes no args. sets up a tape assertion that expects exit code to equal 0
+sets up a tape assertion that expects exit code to equal 0 – with an optional `message`
 
-### spawnTest.exitCode(code)
+### spawnTest.exitCode(code, [message])
 
-`code` must be a number. sets up a tape assertion that expects exit code to equal `code`
+`code` must be a number. sets up a tape assertion that expects exit code to equal `code` – with an optional `message`
 
 ### spawnTest.timeout(time, [message])
 
