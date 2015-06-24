@@ -57,7 +57,7 @@ test('spawn with end false', function (t) {
   })
 })
 
-test('spawn and ensure proc was killed', function (t) {
+test.skip('spawn and ensure proc was killed', function (t) {
   var st = spawn(t, 'cat -')
 
   st.stdin.write('x')
@@ -66,7 +66,7 @@ test('spawn and ensure proc was killed', function (t) {
   st.end()
 })
 
-test('spawn and ensure proc was killed (with delay)', function (t) {
+test.skip('spawn and ensure proc was killed (with delay)', function (t) {
   var st = spawn(t, 'cat -')
 
   st.stdout.match('x')
