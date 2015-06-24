@@ -35,7 +35,7 @@ test('spawn ls w/ match string', function (t) {
   var st = spawn(t, 'ls ' + __dirname)
 
   st.succeeds()
-  st.stdout.match('test.js\n')
+  st.stdout.match('bin\ntest.js\n')
   st.end()
 })
 
@@ -98,7 +98,7 @@ test('custom match function', function (t) {
 
   st.succeeds()
   st.stdout.match(function match (output) {
-    return output === 'test.js\n'
+    return output === 'bin\ntest.js\n'
   })
   st.end()
 })
