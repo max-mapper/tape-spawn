@@ -1,5 +1,6 @@
 var test = require('tape')
 var spawn = require('../')
+var resolve = require('path').resolve
 
 test('spawn ls', function (t) {
   var st = spawn(t, 'ls ' + __dirname)
@@ -99,5 +100,16 @@ test('custom match function', function (t) {
   st.stdout.match(function match (output) {
     return output === 'test.js\n'
   })
+  st.end()
+})
+
+test('JSON stream', function (t) {
+  var st = spawn(t, resolve(__dirname, 'bin/json-stream.js'))
+
+  st.succeeds()
+  st.stdout.match(function match (output) {
+    return Array.isArray(JSON.parse(output))
+  })
+
   st.end()
 })
