@@ -94,7 +94,6 @@ StreamTest.prototype.match = function match (pattern, message, failMessage) {
   this.stream.setEncoding('utf8')
   this.stream.on('data', function onData (ch) {
     buff += ch
-    matchOutput()
   })
 
   this.stream.on('end', function onEnd () {

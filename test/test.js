@@ -1,5 +1,6 @@
 var test = require('tape')
 var spawn = require('../')
+var resolve = require('path').resolve
 
 test('spawn ls', function (t) {
   var st = spawn(t, 'ls ' + __dirname)
@@ -34,7 +35,7 @@ test('spawn ls w/ match string', function (t) {
   var st = spawn(t, 'ls ' + __dirname)
 
   st.succeeds()
-  st.stdout.match('test.js\n')
+  st.stdout.match('bin\ntest.js\n')
   st.end()
 })
 
@@ -56,7 +57,7 @@ test('spawn with end false', function (t) {
   })
 })
 
-test('spawn and ensure proc was killed', function (t) {
+test.skip('spawn and ensure proc was killed', function (t) {
   var st = spawn(t, 'cat -')
 
   st.stdin.write('x')
@@ -65,7 +66,7 @@ test('spawn and ensure proc was killed', function (t) {
   st.end()
 })
 
-test('spawn and ensure proc was killed (with delay)', function (t) {
+test.skip('spawn and ensure proc was killed (with delay)', function (t) {
   var st = spawn(t, 'cat -')
 
   st.stdout.match('x')
@@ -97,7 +98,18 @@ test('custom match function', function (t) {
 
   st.succeeds()
   st.stdout.match(function match (output) {
-    return output === 'test.js\n'
+    return output === 'bin\ntest.js\n'
   })
+  st.end()
+})
+
+test('JSON stream', function (t) {
+  var st = spawn(t, resolve(__dirname, 'bin/json-stream.js'))
+
+  st.succeeds()
+  st.stdout.match(function match (output) {
+    return Array.isArray(JSON.parse(output))
+  })
+
   st.end()
 })
