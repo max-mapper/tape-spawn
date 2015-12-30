@@ -93,7 +93,7 @@ test('spawn with custom spawn option', function (t) {
 })
 
 test('spawn kill', function (t) {
-  var st = spawn(t, 'ping localhost' + __dirname)
+  var st = spawn(t, 'ping localhost')
   setTimeout(function () {
     st.kill()
   }, 2000)
