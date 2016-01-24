@@ -109,3 +109,11 @@ test('custom match function', function (t) {
   })
   st.end()
 })
+
+test('match function', function (t) {
+  var st = spawn(t, 'echo one; sleep 0.5; echo two; exit 7')
+
+  st.stdout.match(/^one/)
+  st.exitCode(7)
+  st.end()
+})
