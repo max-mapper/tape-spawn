@@ -29,7 +29,7 @@ function StreamMatch (t, command, opts) {
   })
 
   function checkDone () {
-    if (self.stdout.pending === 0 && self.stderr.pending === 0) {
+    if (self.opts.exitCode === undefined && self.stdout.pending === 0 && self.stderr.pending === 0) {
       self.proc.kill()
     }
   }
