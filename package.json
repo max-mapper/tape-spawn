@@ -1,6 +1,6 @@
 {
   "name": "tape-spawn",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "spawn processes conveniently in tape tests and match against stdout/stderr streaming output",
   "main": "index.js",
   "scripts": {
