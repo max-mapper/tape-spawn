@@ -92,6 +92,14 @@ test('spawn with custom spawn option', function (t) {
   st.end()
 })
 
+test('spawn kill', function (t) {
+  var st = spawn(t, 'ping localhost')
+  setTimeout(function () {
+    st.kill()
+  }, 2000)
+  st.end()
+})
+
 test('custom match function', function (t) {
   var st = spawn(t, 'ls ' + __dirname)
 
